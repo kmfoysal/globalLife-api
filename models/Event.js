@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 const EventSchema = new mongoose.Schema(
     {
-        userId: {
-            type: String,
-            required: true,
-        },
-        username: {
-            type: String,
-            required: true,
-        },
+        // userId: {
+        //     type: String,
+        //     required: true,
+        // },
+        // username: {
+        //     type: String,
+        //     required: true,
+        // },
         title: {
             type: String,
             required: true,
@@ -75,8 +75,8 @@ const EventSchema = new mongoose.Schema(
             default: [],
         },
         photos: {
-            type: [String],
-            default: [],
+            type: String,
+            // default: [],
             required: false,
         },
     },
