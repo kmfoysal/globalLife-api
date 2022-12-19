@@ -17,6 +17,11 @@ import usersRoute from "./routes/users.js";
 const app = express();
 dotenv.config();
 
+// app.use("/images", express.static(path.join(__dirname, "/images")));
+
+
+
+
 const connect = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URL);
@@ -31,7 +36,6 @@ mongoose.connection.on("disconnected", () => {
 });
 
 
-// app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //middlewares
 app.use(cors());
@@ -49,20 +53,17 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     // const fileExt = path.extname(file.originalname);
-    const fileName =
-      file.originalname
-        .toLowerCase()
-        .split(" ")
-        .join("-") +
-      "-" +
-      Date.now();
+    // const fileName =
+    //   file.originalname
+    //     .toLowerCase()
 
-    cb(null, fileName);
+    cb(null, req.body.name);
   },
 });
 
 const upload = multer({ storage: storage });
-app.post("/api/upload", upload.single("photos"), (req, res) => {
+
+app.post("/api/uploads", upload.array("file", 3), (req, res) => {
     try {
         return res.status(200).json("File uploded successfully");
     } catch (error) {
