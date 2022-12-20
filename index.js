@@ -10,6 +10,8 @@ import eventRoute from "./routes/event.js";
 import usersRoute from "./routes/users.js";
 // import path from "path";
 
+const port = process.env.PORT || 5000 ;
+
 
 const __dirname = path.resolve();
 
@@ -98,7 +100,7 @@ app.get("/", (req, res) => {
 });
 
 
-app.listen(5000, () => {
-    connect();
-    console.log("Connected to backend.");
+app.listen(port, () => {
+  connect();
+  console.log("Connected to backend.");
 });
