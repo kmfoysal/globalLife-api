@@ -4,20 +4,20 @@ import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import multer from "multer";
-// import path from "path";
+import path from "path";
 import authRoute from './routes/auth.js';
 import eventRoute from "./routes/event.js";
 import usersRoute from "./routes/users.js";
 // import path from "path";
 
 
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 
 
 const app = express();
 dotenv.config();
 
-// app.use("/images", express.static(path.join(__dirname, "/images")));
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 
 
@@ -63,7 +63,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post("/api/uploads", upload.array("file", 3), (req, res) => {
+app.post("/api/uploads", upload.single("photos", 3), (req, res) => {
     try {
         return res.status(200).json("File uploded successfully");
     } catch (error) {
@@ -90,6 +90,11 @@ app.use((err, req, res, next) => {
         message: errorMessage,
         stack: err.stack,
     });
+});
+
+
+app.get("/", (req, res) => {
+    res.send("Global Life Server is Running");
 });
 
 

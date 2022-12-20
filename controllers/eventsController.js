@@ -28,6 +28,27 @@ export const allEvents = async (req, res, next) => {
     }
 };
 
+// Get Current User Events 
+export const myEvents = async (req, res, next) => {
+    try {
+        const user = await User.findOne({ username: req.params.username });
+        const events = await Event.find({ userId: user._id });
+        res.status(200).json(events);
+    } catch (err) {
+        next(err);
+    }
+};
+
+// router.get("/profile/:username", async (req, res) => {
+//     try {
+//         const user = await User.findOne({ username: req.params.username });
+//         const events = await Event.find({ userId: user._id });
+//         res.status(200).json(events);
+//     } catch (err) {
+//         res.status(500).json(err);
+//     }
+// });
+
 
 export const updateUser = async (req, res, next) => {
     try {
