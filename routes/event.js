@@ -1,5 +1,5 @@
 import express from "express";
-import { allEvents, createEvent, myEvents } from "../controllers/eventsController.js";
+import { allEvents, createEvent, followEvents, myEvents } from "../controllers/eventsController.js";
 ;
 
 const router = express.Router();
@@ -12,5 +12,8 @@ router.get("/allevents", allEvents);
 
 //GET Current user Events
 router.get("/allevents/:username", myEvents);
+
+//Follow the Events
+router.put("/allevents/:id/follow", followEvents);
 
 export default router;

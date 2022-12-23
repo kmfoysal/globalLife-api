@@ -83,6 +83,10 @@ const EventSchema = new mongoose.Schema(
             // default: [],
             required: true,
         },
+        followers: {
+            type: Array,
+            default: [],
+        },
     },
     { timestamps: true }
 );
