@@ -73,10 +73,10 @@ export const followEvents = async (req, res, next) => {
         const post = await Event.findById(req.params.id);
 
         if (!post.followers.includes(req.body.userId)) {
-            await post.updateOne({ $push: { followers: req.body.userId } });
+            await post.updateOne({ $push: { followers: req.body.userId } }, { new: true });
             res.status(200).json("The post has been follow");
         } else {
-            await post.updateOne({ $pull: { followers: req.body.userId } });
+            await post.updateOne({ $pull: { followers: req.body.userId } }, { new: true });
             res.status(200).json("The post has been unfollow");
         }
     } catch (err) {
