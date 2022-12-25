@@ -19,9 +19,19 @@ export const createEvent = async (req, res, next) => {
 
 // Get All Events
 export const allEvents = async (req, res, next) => {
+
+    let { page, limit, sort, asc } = req.query;
+
+    // if (!page) page = 1;
+    // if (!limit) limit = 2;
+
+    // const skip = (page - 1) * 4;
+
     try {
-        const events = await Event.find();
-        res.status(200).json(events);
+        const events = await Event.find()
+          .sort({ [sort]: asc })
+          .limit(limit);
+        res.status(200).json({ page, limit, events });
     } catch (err) {
         next(err);
     }
@@ -72,6 +82,8 @@ export const followEvents = async (req, res, next) => {
 
         const post = await Event.findById(req.params.id);
 
+        console.log(req.body);
+
         if (!post.followers.includes(req.body.userId)) {
             await post.updateOne({ $push: { followers: req.body.userId } }, { new: true });
             res.status(200).json("The post has been follow");
@@ -79,6 +91,25 @@ export const followEvents = async (req, res, next) => {
             await post.updateOne({ $pull: { followers: req.body.userId } }, { new: true });
             res.status(200).json("The post has been unfollow");
         }
+    } catch (err) {
+        next(err);
+    }
+};
+
+//Total Post Views
+
+export const viewEvents = async (req, res, next) => {
+    try {
+
+        const post = await Event.findById(req.params.id);
+
+        
+            await post.updateOne(
+              { $inc: { views: 1 } },
+              { new: true }
+            );
+            res.status(200).json("The post has been follow");
+       
     } catch (err) {
         next(err);
     }
