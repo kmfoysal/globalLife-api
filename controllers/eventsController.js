@@ -48,12 +48,30 @@ export const myEvents = async (req, res, next) => {
     }
 };
 
-export const updateUser = async (req, res, next) => {
+// Update Event Post 
+
+export const updateEvent = async (req, res, next) => {
+
     try {
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
-        res.status(200).json(updatedUser);
+        const event = await Event.findById(req.params.id)
+
+        if (event.userId === req.body.userId) {
+          try {
+            const updatedEvent = await Event.findByIdAndUpdate(
+              req.params.id,
+              { $set: req.body },
+              { new: true }
+            );
+            res.status(200).json(updatedEvent);
+          } catch (err) {
+            next(err);
+          }
+        } else {
+          res.status(401).json("You can update only your post!");
+        }
+        
     } catch (err) {
-        next(err);
+        next(err)
     }
 };
 
