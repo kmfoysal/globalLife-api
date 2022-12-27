@@ -1,5 +1,5 @@
 import express from "express";
-import { allEvents, createEvent, followEvents, myEvents, updateEvent, viewEvents } from "../controllers/eventsController.js";
+import { allEvents, createEvent, deleteEvent, followEvents, myEvents, updateEvent, viewEvents } from "../controllers/eventsController.js";
 ;
 
 const router = express.Router();
@@ -9,6 +9,9 @@ router.post("/createevent", createEvent);
 
 // Update Event
 router.put("/allevents/:id", updateEvent);
+
+// Delete Event
+router.delete("/allevents/:id", deleteEvent);
 
 //GET ALL Events
 router.get("/allevents", allEvents);
@@ -23,3 +26,4 @@ router.put("/allevents/:id/follow", followEvents);
 router.put("/allevents/:id/views", viewEvents);
 
 export default router;
+
