@@ -37,6 +37,17 @@ export const allEvents = async (req, res, next) => {
     }
 };
 
+// Get a single events 
+export const getSingleEvent = async (req, res, next) => {
+    try {
+        const event = await Event.findById(req.params.id);
+        res.status(200).json(event);
+    } catch (err) {
+        next(err);
+    }
+};
+
+
 // Get Current User Events
 export const myEvents = async (req, res, next) => {
     try {
