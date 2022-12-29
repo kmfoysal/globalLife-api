@@ -6,7 +6,7 @@ export const createEvent = async (req, res, next) => {
     try {
         const newEvent = new Event({
             ...req.body,
-            followers: []
+            followers: [],
         });
 
         const saveEvent = await newEvent.save();
@@ -19,7 +19,6 @@ export const createEvent = async (req, res, next) => {
 
 // Get All Events
 export const allEvents = async (req, res, next) => {
-
     let { page, limit, sort, asc } = req.query;
 
     // if (!page) page = 1;
@@ -27,17 +26,29 @@ export const allEvents = async (req, res, next) => {
 
     // const skip = (page - 1) * 4;
 
+    let category = req.query.category;
+    let postType = req.query.postType;
+
     try {
-        const events = await Event.find()
-          .sort({ [sort]: asc })
-          .limit(limit);
+        
+        let events;
+        
+        if (category) {
+            events = await Event.find({ category });
+        } else if (postType) {
+            events = await Event.find({ postType });
+        } else {
+            events = await Event.find()
+                .sort({ [sort]: asc })
+                .limit(limit);;
+        }
         res.status(200).json({ page, limit, events });
     } catch (err) {
         next(err);
     }
 };
 
-// Get a single events 
+// Get a single events
 export const getSingleEvent = async (req, res, next) => {
     try {
         const event = await Event.findById(req.params.id);
@@ -46,7 +57,6 @@ export const getSingleEvent = async (req, res, next) => {
         next(err);
     }
 };
-
 
 // Get Current User Events
 export const myEvents = async (req, res, next) => {
@@ -59,53 +69,54 @@ export const myEvents = async (req, res, next) => {
     }
 };
 
-// Update Event Post 
-
-export const updateEvent = async (req, res, next) => {
-
+export const getByCategory = async (req, res, next) => {
     try {
-        const event = await Event.findById(req.params.id)
-
-        if (event.userId === req.body.userId) {
-          try {
-            const updatedEvent = await Event.findByIdAndUpdate(
-              req.params.id,
-              { $set: req.body },
-              { new: true }
-            );
-            res.status(200).json(updatedEvent);
-          } catch (err) {
-            next(err);
-          }
-        } else {
-          res.status(401).json("You can update only your post!");
-        }
-        
+        const getByCategory = await Event.find({ category: req.params.categoryName }).limit(20);
+        res.status(200).json(getByCategory);
     } catch (err) {
-        next(err)
+        next(err);
     }
 };
 
-// Delete an Event 
+// Update Event Post
+
+export const updateEvent = async (req, res, next) => {
+    try {
+        const event = await Event.findById(req.params.id);
+
+        if (event.userId === req.body.userId) {
+            try {
+                const updatedEvent = await Event.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
+                res.status(200).json(updatedEvent);
+            } catch (err) {
+                next(err);
+            }
+        } else {
+            res.status(401).json("You can update only your post!");
+        }
+    } catch (err) {
+        next(err);
+    }
+};
+
+// Delete an Event
 
 export const deleteEvent = async (req, res, next) => {
-
     try {
-        const event = await Event.findById(req.params.id)
+        const event = await Event.findById(req.params.id);
 
         if (event.username === req.body.username) {
-          try {
-           await event.delete();
-            res.status(200).json("Post has been deleted...");
-          } catch (err) {
-            next(err);
-          }
+            try {
+                await event.delete();
+                res.status(200).json("Post has been deleted...");
+            } catch (err) {
+                next(err);
+            }
         } else {
-          res.status(401).json("You can Delete only your post!");
+            res.status(401).json("You can Delete only your post!");
         }
-        
     } catch (err) {
-        next(err)
+        next(err);
     }
 };
 
@@ -131,7 +142,6 @@ export const deleteEvent = async (req, res, next) => {
 
 export const followEvents = async (req, res, next) => {
     try {
-
         const post = await Event.findById(req.params.id);
 
         console.log(req.body);
@@ -152,16 +162,10 @@ export const followEvents = async (req, res, next) => {
 
 export const viewEvents = async (req, res, next) => {
     try {
-
         const post = await Event.findById(req.params.id);
 
-        
-            await post.updateOne(
-              { $inc: { views: 1 } },
-              { new: true }
-            );
-            res.status(200).json("The post has been follow");
-       
+        await post.updateOne({ $inc: { views: 1 } }, { new: true });
+        res.status(200).json("The post has been follow");
     } catch (err) {
         next(err);
     }
