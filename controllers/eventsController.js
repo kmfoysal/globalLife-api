@@ -1,4 +1,3 @@
-import e from "express";
 import Event from "../models/Event.js";
 import User from "../models/user.js";
 
@@ -60,6 +59,7 @@ export const getSingleEvent = async (req, res, next) => {
 
 // Get Current User Events
 export const myEvents = async (req, res, next) => {
+
   let { page, limit, sort, asc } = req.query;
 
   let category = req.query.category;
@@ -87,16 +87,17 @@ export const myEvents = async (req, res, next) => {
   }
 };
 
-export const getByCategory = async (req, res, next) => {
-  try {
-    const getByCategory = await Event.find({
-      category: req.params.categoryName,
-    }).limit(20);
-    res.status(200).json(getByCategory);
-  } catch (err) {
-    next(err);
-  }
-};
+
+// export const getByCategory = async (req, res, next) => {
+//   try {
+//     const getByCategory = await Event.find({
+//       category: req.params.categoryName,
+//     }).limit(20);
+//     res.status(200).json(getByCategory);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 
 // Update Event Post
 
