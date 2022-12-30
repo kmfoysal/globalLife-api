@@ -1,5 +1,5 @@
 import express from "express";
-import { allEvents, createEvent, deleteEvent, followEvents, getByCategory, getSingleEvent, myEvents, updateEvent, viewEvents } from "../controllers/eventsController.js";
+import { allEvents, createEvent, deleteEvent, followEvents, getSingleEvent, myEvents, updateEvent, viewEvents } from "../controllers/eventsController.js";
 
 const router = express.Router();
 
@@ -20,9 +20,6 @@ router.get("/allevents/:id", getSingleEvent);
 
 //GET Current user Events
 router.get("/myevents/:username", myEvents);
-
-//GET Events By Category
-router.get("/allevents/category/:categoryName", getByCategory);
 
 //Follow the Events
 router.put("/allevents/:id/follow", followEvents);
