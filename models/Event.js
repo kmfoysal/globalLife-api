@@ -81,7 +81,7 @@ const EventSchema = new mongoose.Schema(
         },
         photos: {
             type: String,
-            default: "",
+            // default: [],
             required: true,
         },
         followers: {
