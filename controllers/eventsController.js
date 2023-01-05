@@ -6,7 +6,7 @@ export const createEvent = async (req, res, next) => {
   try {
     const newEvent = new Event({
       ...req.body,
-      followers: [],
+      username: [],
     });
 
     const saveEvent = await newEvent.save();

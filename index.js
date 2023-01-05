@@ -8,6 +8,8 @@ import path from "path";
 import authRoute from './routes/auth.js';
 import eventRoute from "./routes/event.js";
 import usersRoute from "./routes/users.js";
+import reviewRoute from "./routes/review.js";
+
 // import path from "path";
 
 const port = process.env.PORT || 5000 ;
@@ -50,29 +52,29 @@ app.use(express.json());
 
 
 // File Upload 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "images");
-  },
-  filename: (req, file, cb) => {
-    // const fileExt = path.extname(file.originalname);
-    // const fileName =
-    //   file.originalname
-    //     .toLowerCase()
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "images");
+//   },
+//   filename: (req, file, cb) => {
+//     // const fileExt = path.extname(file.originalname);
+//     // const fileName =
+//     //   file.originalname
+//     //     .toLowerCase()
 
-    cb(null, req.body.name);
-  },
-});
+//     cb(null, req.body.name);
+//   },
+// });
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
-app.post("/api/uploads", upload.single("photos"), (req, res) => {
-    try {
-        return res.status(200).json("File uploded successfully");
-    } catch (error) {
-        console.error(error);
-    }
-});
+// app.post("/api/uploads", upload.single("photos"), (req, res) => {
+//     try {
+//         return res.status(200).json("File uploded successfully");
+//     } catch (error) {
+//         console.error(error);
+//     }
+// });
 
 
 
@@ -80,6 +82,7 @@ app.post("/api/uploads", upload.single("photos"), (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/events", eventRoute);
+app.use("/api/reviews", reviewRoute);
 
 
 
