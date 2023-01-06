@@ -34,7 +34,7 @@ const ReviewSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        replyDate: new Date()
+        // replyDate: new Date()
       },
     ],
   },
