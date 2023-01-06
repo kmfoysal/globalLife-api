@@ -24,6 +24,10 @@ const ReviewSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    aggrement: {
+      type: Boolean,
+      default: false,
+    },
     replyReview: [
       {
         username: {
@@ -34,7 +38,10 @@ const ReviewSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        // replyDate: new Date()
+        replyTime: {
+          type: String,
+          default: '',
+        },
       },
     ],
   },
