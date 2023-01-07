@@ -10,6 +10,10 @@ const ReviewSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
     reviewDesc: {
       type: String,
       required: true,
@@ -19,6 +23,7 @@ const ReviewSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
+      default: 0,
     },
     profilePic: {
       type: String,
@@ -40,7 +45,7 @@ const ReviewSchema = new mongoose.Schema(
         },
         replyTime: {
           type: String,
-          default: '',
+          default: "",
         },
       },
     ],

@@ -16,3 +16,15 @@ export const addReview = async (req, res, next) => {
     next(err);
   }
 };
+
+
+// Get Reviews
+
+export const getReviews = async (req, res, next) => {
+  try {
+    const reviews = await Review.find({ postId: req.params.postId });
+    res.status(200).json(reviews);
+  } catch (err) {
+    next(err);
+  }
+};
