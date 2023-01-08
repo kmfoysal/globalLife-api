@@ -35,18 +35,7 @@ const ReviewSchema = new mongoose.Schema(
     },
     replyReview: [
       {
-        username: {
-          type: String,
-          required: true,
-        },
-        replyDesc: {
-          type: String,
-          required: true,
-        },
-        replyTime: {
-          type: String,
-          default: "",
-        },
+        replyDesc: String,
       },
     ],
   },
