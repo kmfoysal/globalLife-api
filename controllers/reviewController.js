@@ -31,7 +31,7 @@ export const getReviews = async (req, res, next) => {
 // Reply Review / update
 export const replyReview = async (req, res, next) => {
 
-  const { username, replyName, replyTime, replyDesc } = req.body;
+  // const { username, replyName, replyTime, replyDesc } = req.body;
 
   // console.log(username, replyName, replyTime, replyDesc);
 
@@ -42,11 +42,11 @@ export const replyReview = async (req, res, next) => {
 
     // if (review.username === req.body.username) {
       try {
-        const replyReview = await Review.updateOne(
+        const replyReview = await review.updateOne(
           {
             $push: {
               replyReview: {
-                replyDesc,
+                replyDesc: req.body.replyDesc,
               },
             },
           },

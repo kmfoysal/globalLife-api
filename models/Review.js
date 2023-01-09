@@ -36,6 +36,7 @@ const ReviewSchema = new mongoose.Schema(
     replyReview: [
       {
         replyDesc: String,
+        default: ''
       },
     ],
   },
