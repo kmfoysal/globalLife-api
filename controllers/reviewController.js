@@ -35,10 +35,12 @@ export const replyReview = async (req, res, next) => {
 
   // console.log(username, replyName, replyTime, replyDesc);
 
-  try {
-    const review = await Review.findOne({ username: req.params.username });
+  // try {
+    const review = await Review.findById(req.params.reviewId);
 
-    if (review.username === req.body.username) {
+    console.log(review);
+
+    // if (review.username === req.body.username) {
       try {
         const replyReview = await Review.updateOne(
           {
@@ -54,10 +56,10 @@ export const replyReview = async (req, res, next) => {
       } catch (err) {
         next(err);
       }
-    } else {
-      res.status(401).json("You can Reply only your post!");
-    }
-  } catch (err) {
-    next(err);
-  }
+  //   } else {
+  //     res.status(401).json("You can Reply only your post!");
+  //   }
+  // } catch (err) {
+  //   next(err);
+  // }
 };

@@ -10,6 +10,6 @@ router.post("/addReview", addReview);
 router.get("/:postId", getReviews);
 
 // reply Reviews
-router.put("/:username", replyReview);
+router.put("/:reviewId/reply", replyReview);
 
 export default router;
