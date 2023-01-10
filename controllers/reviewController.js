@@ -31,26 +31,27 @@ export const getReviews = async (req, res, next) => {
 // Reply Review / update
 export const replyReview = async (req, res, next) => {
 
-  // const { username, replyName, replyTime, replyDesc } = req.body;
+  const { reviewId, replyerName, replyTime, replyDesc } = req.body;
 
   // console.log(username, replyName, replyTime, replyDesc);
 
   // try {
     const review = await Review.findById(req.params.reviewId);
 
-    console.log(review);
-
     // if (review.username === req.body.username) {
       try {
         const replyReview = await review.updateOne(
-          {
-            $push: {
-              replyReview: {
-                replyDesc: req.body.replyDesc,
-              },
+            {
+                $push: {
+                    replyReview: {
+                        reviewId: reviewId,
+                        replyerName:replyerName,
+                        replyTime: replyTime,
+                        replyDesc: replyDesc,
+                    },
+                },
             },
-          },
-          { new: true }
+            { new: true }
         );
         res.status(200).json(replyReview);
       } catch (err) {
